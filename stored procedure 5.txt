@@ -1,0 +1,16 @@
+-- I want to only know the first name, last name and birthday of an employee when entering an employee number.
+
+drop procedure if exists emp_bday;
+delimiter //
+
+create procedure emp_bday(in employee_number int)
+
+begin 
+	select first_name, last_name, birth_date 
+    from employees 
+    where emp_no = employee_number;
+
+end //
+
+delimiter ;
+call emp_bday(10456);

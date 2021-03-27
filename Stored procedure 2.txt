@@ -1,0 +1,17 @@
+-- I want to know how much money is spent on salaries for each department.
+
+drop procedure if exists dept_salary;
+delimiter //
+
+create procedure dept_salary()
+begin
+	select sum(s.salary) as 'Sum Salary', d.dept_name 
+from salaries s 
+inner join dept_emp de on s.emp_no = de.emp_no
+inner join departments d on d.dept_no = de.dept_no 
+group by d.dept_name;
+
+end //
+
+delimiter ;
+call dept_salary();

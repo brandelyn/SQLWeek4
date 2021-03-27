@@ -1,0 +1,28 @@
+-- I want to know if an employee is a new hire or a tenure 
+
+drop procedure if exists new_or_tenure;
+delimiter // 
+
+create procedure new_or_tenure(in employee_number int)
+begin
+	  declare  emp_type varchar(20);
+	 
+	 call years_in_job(employee_number, @years);
+	
+     if @years < 2 then 
+     set emp_type = 'New hire';
+     else 
+     set emp_type = 'Tenure';
+    end if;
+   
+   
+	select @years as years, emp_type, d.dept_name
+	from departments d
+	inner join dept_emp de on de.dept_no = d.dept_no 
+	inner join employees e on e.emp_no = de.emp_no 
+	where e.emp_no = employee_number
+	limit 1;
+end //
+
+delimiter ;
+call new_or_tenure(10245);

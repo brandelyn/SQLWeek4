@@ -1,0 +1,19 @@
+-- This stored procedure let's me know how many employees with each title were hired after 1990-01-01.
+
+drop procedure if exists number_hired;
+delimiter //
+
+create procedure number_hired()
+begin
+	select count(*) as number_hired, t.title
+from employees e 
+inner join titles t on t.emp_no = e.emp_no 
+where e.hire_date > '1990-01-01'
+group by t.title;
+
+
+end // 
+
+delimiter ;
+call number_hired();
+
